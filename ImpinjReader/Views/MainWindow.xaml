@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Closed="Window_Closed">
     <Grid Background="Black">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -35,7 +35,7 @@
 
         <ListBox 
                  ItemsSource="{Binding MainModel.Result}" 
-                   DisplayMemberPath="Name"  Grid.Column="1"  Grid.Row="1"
+                   DisplayMemberPath="Epc"  Grid.Column="1"  Grid.Row="1"
                  />
     </Grid>
 </Window>

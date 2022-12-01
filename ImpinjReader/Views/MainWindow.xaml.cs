@@ -16,5 +16,10 @@ namespace ImpinjReader.Views
             viewModel = new MainWindowViewModel();
             this.DataContext = viewModel;
         }
+
+        private void Window_Closed(object sender, System.EventArgs e)
+        {
+            viewModel.Dispose();
+        }
     }
 }

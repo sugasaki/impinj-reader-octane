@@ -23,7 +23,7 @@ namespace ImpinjReader.Models
         private CompositeDisposable Disposable { get; } = new CompositeDisposable();
 
 
-        public ReactiveCollection<TagModel> Result { get; set; } = new ReactiveCollection<TagModel>();
+        public ReactiveCollection<Common.Uhf.Tag> Result { get; set; } = new ReactiveCollection<Common.Uhf.Tag>();
 
 
         /// <summary>

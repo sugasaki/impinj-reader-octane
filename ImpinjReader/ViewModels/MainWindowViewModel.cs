@@ -1,4 +1,5 @@
-﻿using ImpinjOctane;
+﻿using Common.Uhf;
+using ImpinjOctane;
 using ImpinjReader.Models;
 using Reactive.Bindings;
 using System;
@@ -12,15 +13,6 @@ namespace ImpinjReader.ViewModels
 {
     internal class MainWindowViewModel : INotifyPropertyChanged, IDisposable
     {
-
-        /// <summary>
-        /// デストラクタ
-        /// </summary>
-        public void Dispose()
-        {
-            Disposable.Dispose();
-        }
-
 
         /// <summary>
         /// PropertyChanged これが無いとメモリリークを起こす
@@ -65,15 +57,42 @@ namespace ImpinjReader.ViewModels
             RfidInventoryStartCommand.Subscribe(_ => Start());
             RfidInventoryStopCommand.Subscribe(_ => Stop());
             ClearCommand.Subscribe(_ => Clear());
-            
+
+            reader.onReceiveMessage = onReceiveMessage;
             reader.OnConnectionLostEvent = OnConnectionLost;
             reader.OnKeepaliveReceivedEvent = OnKeepaliveReceived;
             reader.OnTagReportedEvent = OnTagReported;
-
             reader.OnStartCompleted = OnStartCompleted;
             reader.OnStopCompleted = OnStopCompleted;
         }
 
+
+        /// <summary>
+        /// デストラクタ
+        /// </summary>
+        public void Dispose()
+        {
+            Stop();
+            Disposable.Dispose();
+        }
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        private void onReceiveMessage(string value)
+        {
+            Task.Run(() =>
+            {
+                Messages.Add(new Message()
+                {
+                    Title = value,
+                });
+            }).GetAwaiter().GetResult();
+        }
+        
         /// <summary>
         /// QRコード読み取り検出
         /// </summary>
@@ -93,6 +112,7 @@ namespace ImpinjReader.ViewModels
         {
             reader.Stop();
         }
+
         private void Clear()
         {
             Task.Run(() =>
@@ -124,29 +144,21 @@ namespace ImpinjReader.ViewModels
             }).GetAwaiter().GetResult();
         }
 
-        private void OnConnectionLost(string value)
+        private void OnConnectionLost(ImpinjReaderDTO value)
         {
-            Task.Run(() =>
-            {
-                Messages.Add(new Message()
-                {
-                    Title = value,
-                });
-            }).GetAwaiter().GetResult();
+            var message = string.Format("Connection lost : {0} ({1})", value.Name, value.Address);
         }
 
-        private void OnKeepaliveReceived(string value)
+        private void OnKeepaliveReceived(ImpinjReaderDTO value)
         {
-            Task.Run(() =>
-            {
-                Messages.Add(new Message()
-                {
-                    Title = value,
-                });
-            }).GetAwaiter().GetResult();
+            var message = string.Format("Keepalive received from {0} ({1})", value.Name, value.Address);
         }
 
-        private void OnTagReported(TagModel value)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        private void OnTagReported(Common.Uhf.Tag value)
         {
             Task.Run( () =>
             {
