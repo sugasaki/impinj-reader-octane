@@ -23,7 +23,7 @@ namespace ImpinjReader.Models
         private CompositeDisposable Disposable { get; } = new CompositeDisposable();
 
 
-        public ReactiveCollection<Common.Uhf.Tag> Result { get; set; } = new ReactiveCollection<Common.Uhf.Tag>();
+        public ReactiveCollection<Common.Uhf.Tag> Tags { get; set; } = new ReactiveCollection<Common.Uhf.Tag>();
 
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace ImpinjReader.Models
         public MainWindowModel()
         {
             // UIスレッド以外からコレクションを操作する為に必要
-            BindingOperations.EnableCollectionSynchronization(Result, new object());
+            BindingOperations.EnableCollectionSynchronization(Tags, new object());
 
             //Result.Add(new TagModel()
             //{

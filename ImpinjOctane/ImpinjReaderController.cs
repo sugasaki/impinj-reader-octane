@@ -11,15 +11,17 @@ namespace ImpinjOctane
     public class ImpinjReaderController
     {
         private string? hostName { get; set; } = null;
-
-
         private ImpinjReader reader = new ImpinjReader();
+
+
+        public Action<IEnumerable<Common.Uhf.Tag>>? ReceivedTags;
+
 
         public Action<string>? onReceiveMessage;
 
         public Action<ImpinjReaderDTO>? OnConnectionLostEvent;
         public Action<ImpinjReaderDTO>? OnKeepaliveReceivedEvent;
-        public Action<Common.Uhf.Tag>? OnTagReportedEvent;
+
         public Action? OnStartCompleted;
         public Action<string>? OnStartException;
         public Action? OnStopCompleted;
@@ -188,21 +190,20 @@ namespace ImpinjOctane
         /// <param name="report"></param>
         private void OnTagsReported(ImpinjReader sender, TagReport report)
         {
-            foreach (Impinj.OctaneSdk.Tag tag in report)
+            var now = DateTime.Now;
+            var tags = report.Tags.Select(tag => new Common.Uhf.Tag()
             {
-                string epc = tag.Epc.ToHexString();
-                //string message = string.Format("EPC : {0} Timestamp : {1}", epc, tag.LastSeenTime);
-                //Console.WriteLine(message);
+                Tid = tag.Tid.ToHexString(),
+                AntennaId = tag.AntennaPortNumber,
+                Crc = tag.Crc,
+                PcBits = tag.PcBits,
+                Epc = tag.Epc.ToHexString(),
+                PhaseAngle = tag.PhaseAngleInRadians,
+                PeakRssi = tag.PeakRssiInDbm,
+                ReceivedAt = now
+            });
 
-                var tagModel = new Common.Uhf.Tag()
-                {
-                    Epc = epc,
-                    ReceivedAt = tag.LastSeenTime.LocalDateTime,
-                };
-
-                OnTagReportedEvent?.Invoke(tagModel);
-            }
+            ReceivedTags?.Invoke(tags);
         }
-
     }
 }

@@ -3,7 +3,9 @@ using ImpinjOctane;
 using ImpinjReader.Models;
 using Reactive.Bindings;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Reactive.Disposables;
 using System.Threading;
 using System.Threading.Tasks;
@@ -61,9 +63,11 @@ namespace ImpinjReader.ViewModels
             reader.onReceiveMessage = onReceiveMessage;
             reader.OnConnectionLostEvent = OnConnectionLost;
             reader.OnKeepaliveReceivedEvent = OnKeepaliveReceived;
-            reader.OnTagReportedEvent = OnTagReported;
             reader.OnStartCompleted = OnStartCompleted;
             reader.OnStopCompleted = OnStopCompleted;
+
+            //
+            reader.ReceivedTags = OnReceivedTags;
         }
 
 
@@ -117,7 +121,7 @@ namespace ImpinjReader.ViewModels
         {
             Task.Run(() =>
             {
-                MainModel.Result.Clear();
+                MainModel.Tags.Clear();
             }).GetAwaiter().GetResult();
         }
 
@@ -154,16 +158,21 @@ namespace ImpinjReader.ViewModels
             var message = string.Format("Keepalive received from {0} ({1})", value.Name, value.Address);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="value"></param>
-        private void OnTagReported(Common.Uhf.Tag value)
+
+        private void OnReceivedTags(IEnumerable<Common.Uhf.Tag> tags)
         {
-            Task.Run( () =>
+            Task.Run(() =>
             {
-                MainModel.Result.Add(value);
+                if (tags.Count() > 1)
+                {
+                    var a = 1;
+                }
+                foreach (var tag in tags)
+                {
+                    MainModel.Tags.Add(tag);
+                }
             }).GetAwaiter().GetResult();
         }
+
     }
 }
