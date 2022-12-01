@@ -1,10 +1,13 @@
-﻿using ImpinjOctane;
+﻿using Common.Uhf;
+using Impinj.OctaneSdk;
+using ImpinjOctane;
 using Reactive.Bindings;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Disposables;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
@@ -24,6 +27,8 @@ namespace ImpinjReader.Models
 
 
         public ReactiveCollection<Common.Uhf.Tag> Tags { get; set; } = new ReactiveCollection<Common.Uhf.Tag>();
+
+        public ReactiveProperty<string> LastInventTag { get; set; } = new ReactiveProperty<string>();
 
 
         /// <summary>
@@ -45,7 +50,20 @@ namespace ImpinjReader.Models
             //    Name = "test",
             //    LastSeenTime = "1"
             //});
+
+            LastInventTag.Value = "";
         }
+
+
+        public void Add(IEnumerable<Common.Uhf.Tag> tags)
+        {
+            foreach (var tag in tags)
+            {
+                Tags.Add(tag);
+            }
+            LastInventTag.Value = tags.Last().Epc;
+        }
+
 
     }
 }

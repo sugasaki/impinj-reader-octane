@@ -163,14 +163,11 @@ namespace ImpinjReader.ViewModels
         {
             Task.Run(() =>
             {
-                if (tags.Count() > 1)
-                {
-                    var a = 1;
-                }
-                foreach (var tag in tags)
-                {
-                    MainModel.Tags.Add(tag);
-                }
+                //if (tags.Count() > 1)
+                //{
+                //    var a = 1;
+                //}
+                MainModel.Add(tags);
             }).GetAwaiter().GetResult();
         }
 

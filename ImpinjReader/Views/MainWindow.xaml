@@ -4,45 +4,61 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Closed="Window_Closed">
+        Title="Tag Checker" Height="450" Width="800" Closed="Window_Closed">
     <Grid Background="Black">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="5"/>
-            <RowDefinition Height="1*"/>
-        </Grid.RowDefinitions>
+
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="108"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0"  Grid.Row="0" Grid.RowSpan="3" >
+        <Grid Grid.Column="0" >
             <Button Content="Start" Command="{Binding RfidInventoryStartCommand}" 
-                HorizontalAlignment="Left" Margin="5,20,0,0" VerticalAlignment="Top" Height="68" Width="174" />
+                HorizontalAlignment="Left" Margin="5,20,0,0" VerticalAlignment="Top" Height="38" Width="87" />
 
             <Button Content="Stop" Command="{Binding RfidInventoryStopCommand}" 
-                    HorizontalAlignment="Left" Margin="5,100,0,0" VerticalAlignment="Top" Height="68" Width="174" />
+                    HorizontalAlignment="Left" Margin="5,63,0,0" VerticalAlignment="Top" Height="38" Width="87" />
 
             <Button Content="Clear" Command="{Binding ClearCommand}" 
-                HorizontalAlignment="Left" Margin="5,200,0,0" VerticalAlignment="Top" Height="68" Width="174" />
+                HorizontalAlignment="Left" Margin="5,140,0,0" VerticalAlignment="Top" Height="38" Width="87" />
         </Grid>
 
+        <Grid Grid.Column="1"  >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="3"/>
+                <RowDefinition Height="200"/>
+                <RowDefinition Height="3"/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
 
-        <Grid Grid.Column="1"  Grid.Row="0"  >
-                <ListBox 
-                 ItemsSource="{Binding Messages}" 
-                   DisplayMemberPath="Title"
-                 />
-        </Grid>
-        <GridSplitter  Grid.Column="1"  Grid.Row="1" HorizontalAlignment="Stretch" />
 
-        <Grid Grid.Column="1"  Grid.Row="2">
+            <Grid  Grid.Row="0">
+                <StackPanel Orientation="Vertical" >
+                    <TextBlock Text="{Binding MainModel.LastInventTag.Value }" FontSize="200"  Foreground="Red" />
+                </StackPanel>
+            </Grid>
+
+            <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch"  />
+
+            <Grid  Grid.Row="2">
                 <ListBox 
                  ItemsSource="{Binding MainModel.Tags}" 
                    DisplayMemberPath="Message"  
                  />
+            </Grid>
+
+            <GridSplitter Grid.Row="3" HorizontalAlignment="Stretch"  />
+
+            <Grid  Grid.Row="4" >
+                <ListBox 
+                 ItemsSource="{Binding Messages}" 
+                   DisplayMemberPath="Title"
+                 />
+            </Grid>
+
         </Grid>
 
-        
+
     </Grid>
 </Window>
