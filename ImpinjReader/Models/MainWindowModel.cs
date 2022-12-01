@@ -45,12 +45,6 @@ namespace ImpinjReader.Models
             // UIスレッド以外からコレクションを操作する為に必要
             BindingOperations.EnableCollectionSynchronization(Tags, new object());
 
-            //Result.Add(new TagModel()
-            //{
-            //    Name = "test",
-            //    LastSeenTime = "1"
-            //});
-
             LastInventTag.Value = "";
         }
 
@@ -61,8 +55,30 @@ namespace ImpinjReader.Models
             {
                 Tags.Add(tag);
             }
-            LastInventTag.Value = tags.Last().Epc;
+            LastInventTag.Value = GetName(tags.Last());
         }
+
+
+
+        public string GetName(Common.Uhf.Tag tag)
+        {
+            switch (tag.Epc)
+            {
+                case "E28011700000020EE77280A1":
+                    return "100";
+                case "1C647F1F61A9DCA062EA03BD":
+                    return "22098";
+                case "94647F1F8BA9DCA04AEA03BD":
+                    return "22098";
+                case "E200001C4919008215603515":
+                    return "1368";
+                case "E200001C4919008212403595":
+                    return "1368";
+                default:
+                    return tag.Epc;
+            }
+        }
+
 
 
     }

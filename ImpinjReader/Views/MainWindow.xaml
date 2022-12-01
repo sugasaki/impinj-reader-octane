@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Tag Checker" Height="450" Width="800" Closed="Window_Closed">
+        Title="Tag Checker" Height="600" Width="1200" Closed="Window_Closed">
     <Grid Background="Black">
 
         <Grid.ColumnDefinitions>
@@ -25,13 +25,12 @@
 
         <Grid Grid.Column="1"  >
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="300*"/>
                 <RowDefinition Height="3"/>
                 <RowDefinition Height="200"/>
                 <RowDefinition Height="3"/>
                 <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
-
 
             <Grid  Grid.Row="0">
                 <StackPanel Orientation="Vertical" >
