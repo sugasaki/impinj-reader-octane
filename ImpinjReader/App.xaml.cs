@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ImpinjReader.Views;
 using System.Windows;
 
 namespace ImpinjReader
@@ -13,5 +8,19 @@ namespace ImpinjReader
     /// </summary>
     public partial class App : Application
     {
+        /// <summary>
+        /// アプリケーション起動
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            var window = new MainWindow();
+            window.Show();
+        }
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+        }
     }
 }

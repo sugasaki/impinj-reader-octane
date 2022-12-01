@@ -7,4 +7,13 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="ReactiveProperty" Version="8.2.0" />
+    <PackageReference Include="ReactiveProperty.Core" Version="8.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ImpinjOctane\ImpinjOctane.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImpinjReader", "ImpinjReader\ImpinjReader.csproj", "{099E1DAB-F37B-46AE-BEA5-7DF6C444CE51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImpinjReader", "ImpinjReader\ImpinjReader.csproj", "{099E1DAB-F37B-46AE-BEA5-7DF6C444CE51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImpinjOctane", "ImpinjOctane\ImpinjOctane.csproj", "{235A3C7C-426D-4AC4-8EB3-6F9B252E0759}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{099E1DAB-F37B-46AE-BEA5-7DF6C444CE51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{099E1DAB-F37B-46AE-BEA5-7DF6C444CE51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{099E1DAB-F37B-46AE-BEA5-7DF6C444CE51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{235A3C7C-426D-4AC4-8EB3-6F9B252E0759}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{235A3C7C-426D-4AC4-8EB3-6F9B252E0759}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{235A3C7C-426D-4AC4-8EB3-6F9B252E0759}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{235A3C7C-426D-4AC4-8EB3-6F9B252E0759}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
