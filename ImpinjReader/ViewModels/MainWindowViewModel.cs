@@ -41,8 +41,9 @@ namespace ImpinjReader.ViewModels
 
         public ReactiveCommand RfidInventoryStartCommand { get; } = new ReactiveCommand();
         public ReactiveCommand RfidInventoryStopCommand { get; } = new ReactiveCommand();
+        public ReactiveCommand ClearCommand { get; } = new ReactiveCommand();
 
-
+        
 
         #region 状態管理用（Model参照）
 
@@ -63,7 +64,8 @@ namespace ImpinjReader.ViewModels
             //実行ボタンの押下
             RfidInventoryStartCommand.Subscribe(_ => Start());
             RfidInventoryStopCommand.Subscribe(_ => Stop());
-
+            ClearCommand.Subscribe(_ => Clear());
+            
             reader.OnConnectionLostEvent = OnConnectionLost;
             reader.OnKeepaliveReceivedEvent = OnKeepaliveReceived;
             reader.OnTagReportedEvent = OnTagReported;
@@ -91,6 +93,14 @@ namespace ImpinjReader.ViewModels
         {
             reader.Stop();
         }
+        private void Clear()
+        {
+            Task.Run(() =>
+            {
+                MainModel.Result.Clear();
+            }).GetAwaiter().GetResult();
+        }
+
 
         private void OnStartCompleted()
         {
