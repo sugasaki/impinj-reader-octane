@@ -74,6 +74,12 @@ namespace ImpinjReader.Models
                     return "1368";
                 case "E200001C4919008212403595":
                     return "1368";
+                case "E28011700000020EE7725481":
+                    return "30547";
+                case "E28011700000020EE7725491":
+                    return "10114";
+                case "E28011700000020EE77254F1":
+                    return "101";
                 default:
                     return tag.Epc;
             }
