@@ -2,9 +2,11 @@
 using Impinj.OctaneSdk;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Collections.Specialized.BitVector32;
 
 namespace ImpinjOctane
 {
@@ -27,6 +29,7 @@ namespace ImpinjOctane
         public Action? OnStopCompleted;
         public Action<string>? OnStopException;
 
+        private Thread? connectionWatcher;
 
         /// <summary>
         /// リーダーと接続する
@@ -50,6 +53,8 @@ namespace ImpinjOctane
                 // リーダーに接続する。
                 reader.Connect(host);
 
+                threadKill(); //接続成功したら、状態検知のスレッドを削除
+
                 message = "Successfully connected.";
                 //Console.WriteLine(message);
                 if (onReceiveMessage != null) onReceiveMessage(message);
@@ -62,7 +67,7 @@ namespace ImpinjOctane
                var  message = "Failed to connect.";
                 //Console.WriteLine(message);
                 if (onReceiveMessage != null) onReceiveMessage(message);
-                throw e;
+                //throw e;
             }
         }
 
@@ -160,14 +165,48 @@ namespace ImpinjOctane
             // Cleanup
             reader.Disconnect();
 
-            // 再接続を試す
-            ConnectToReader(hostName);
+            //// 再接続を試す
+            //threadKill(); //状態検知のスレッドを削除し、再作成する
+            connectionWatcher = new Thread(ConnectionWatcherTask);
+            connectionWatcher.Start();
 
             var message = string.Format("Connection lost : {0} ({1})", reader.Name, reader.Address);
             //Console.WriteLine(message);
             if (OnConnectionLostEvent != null) OnConnectionLostEvent(new ImpinjReaderDTO(reader.Name, reader.Address));
             if (onReceiveMessage != null) onReceiveMessage(message);
         }
+
+        private void threadKill()
+        {
+            //_cancellationTokenSource.Cancel();
+        }
+
+        /// <summary>
+        /// デバイスの切断、復帰を検知するスレッド
+        /// </summary>
+        private void ConnectionWatcherTask()
+        {
+            var isDisconnected = true;
+            while (isDisconnected == true)
+            {
+                if (onReceiveMessage != null) onReceiveMessage("connection retry...");
+
+                // 再接続を試す
+                if (!string.IsNullOrEmpty(hostName)) ConnectToReader(hostName);
+
+                if  (reader.IsConnected)
+                {
+                    isDisconnected = false;
+                    if (onReceiveMessage != null) onReceiveMessage("connected!!");
+                    if (!string.IsNullOrEmpty(hostName))  Start(hostName);
+                }
+
+                Thread.Sleep(5000);
+            }
+        }
+
+
+
 
         /// <summary>
         /// このイベントハンドラは、リーダーからキープアライブメッセージを受信したときに呼び出される。

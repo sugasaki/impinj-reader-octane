@@ -30,9 +30,9 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="300*"/>
                 <RowDefinition Height="3"/>
-                <RowDefinition Height="200"/>
+                <RowDefinition Height="200*"/>
                 <RowDefinition Height="3"/>
-                <RowDefinition Height="100"/>
+                <RowDefinition Height="100*"/>
             </Grid.RowDefinitions>
 
             <Grid  Grid.Row="0">

@@ -49,7 +49,7 @@ namespace ImpinjReader.Models
 
             LastInventTag.Value = "";
 
-            HostIpAddres.Value = "192.168.0.101";
+            HostIpAddres.Value = "192.168.0.102";
         }
 
 
