@@ -103,7 +103,7 @@ namespace ImpinjReader.ViewModels
         /// <param name="no"></param>
         private void Start()
         {
-            string host = "192.168.0.101";
+            string host = MainModel.HostIpAddres.Value;
 
             _ = Task.Run(() =>
             {

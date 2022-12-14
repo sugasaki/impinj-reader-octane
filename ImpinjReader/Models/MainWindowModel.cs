@@ -30,6 +30,8 @@ namespace ImpinjReader.Models
 
         public ReactiveProperty<string> LastInventTag { get; set; } = new ReactiveProperty<string>();
 
+        public ReactiveProperty<string> HostIpAddres { get; set; } = new ReactiveProperty<string>();
+
 
         /// <summary>
         /// デストラクタ
@@ -46,6 +48,8 @@ namespace ImpinjReader.Models
             BindingOperations.EnableCollectionSynchronization(Tags, new object());
 
             LastInventTag.Value = "";
+
+            HostIpAddres.Value = "192.168.0.101";
         }
 
 
